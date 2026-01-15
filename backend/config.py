@@ -31,6 +31,10 @@ MAX_FILE_SIZE: int = int(os.getenv("MAX_FILE_SIZE_MB", "10")) * 1024 * 1024
 # Preview settings
 PREVIEW_ROWS: int = 500
 
+# JSON expansion settings
+# Maximum rows that can be generated when expanding nested arrays (Cartesian product)
+MAX_EXPANDED_ROWS: int = 10000
+
 
 def get_cors_origins() -> list[str]:
     """Get CORS origins based on environment.

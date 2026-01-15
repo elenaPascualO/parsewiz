@@ -90,3 +90,110 @@ class TestJsonToCsvConverter:
 
         assert len(rows) == 1
         assert rows[0]["name"] == "Alice"
+
+    def test_convert_nested2_single_object_with_arrays(self):
+        """Test nested2.json: single object with multiple nested arrays.
+
+        The object has 4 batters and 7 toppings, which should expand to
+        4 × 7 = 28 rows via Cartesian product.
+        """
+        with open("tests/sample_files/nested2.json", "rb") as f:
+            content = f.read()
+
+        result = self.converter.convert(content)
+        reader = csv.DictReader(io.StringIO(result.decode("utf-8")))
+        rows = list(reader)
+
+        # 4 batters × 7 toppings = 28 rows
+        assert len(rows) == 28
+
+        # Verify scalar fields are preserved in every row
+        for row in rows:
+            assert row["id"] == "0001"
+            assert row["type"] == "donut"
+            assert row["name"] == "Cake"
+            assert row["ppu"] == "0.55"
+
+        # Verify nested array fields are expanded
+        assert "batters.batter.id" in reader.fieldnames
+        assert "batters.batter.type" in reader.fieldnames
+        assert "topping.id" in reader.fieldnames
+        assert "topping.type" in reader.fieldnames
+
+        # Verify first row has correct batter and topping
+        assert rows[0]["batters.batter.id"] == "1001"
+        assert rows[0]["batters.batter.type"] == "Regular"
+        assert rows[0]["topping.id"] == "5001"
+        assert rows[0]["topping.type"] == "None"
+
+    def test_convert_nested3_array_with_nested_arrays(self):
+        """Test nested3.json: array of objects each with nested arrays.
+
+        - Object 1: 4 batters × 7 toppings = 28 rows
+        - Object 2: 1 batter × 5 toppings = 5 rows
+        - Object 3: 2 batters × 4 toppings = 8 rows
+        - Total: 41 rows
+        """
+        with open("tests/sample_files/nested3.json", "rb") as f:
+            content = f.read()
+
+        result = self.converter.convert(content)
+        reader = csv.DictReader(io.StringIO(result.decode("utf-8")))
+        rows = list(reader)
+
+        # Total expected rows: 28 + 5 + 8 = 41
+        assert len(rows) == 41
+
+        # Check that all 3 products are represented
+        product_ids = set(row["id"] for row in rows)
+        assert product_ids == {"0001", "0002", "0003"}
+
+        # Count rows per product
+        rows_per_product = {}
+        for row in rows:
+            pid = row["id"]
+            rows_per_product[pid] = rows_per_product.get(pid, 0) + 1
+
+        assert rows_per_product["0001"] == 28  # 4 × 7
+        assert rows_per_product["0002"] == 5   # 1 × 5
+        assert rows_per_product["0003"] == 8   # 2 × 4
+
+    def test_expansion_limit_exceeded(self):
+        """Test that exceeding MAX_EXPANDED_ROWS raises ValueError."""
+        # Create JSON with arrays that would produce too many rows
+        # Using a structure with many nested arrays
+        import json
+        from backend.config import MAX_EXPANDED_ROWS
+
+        # Create arrays that will exceed the limit when multiplied
+        # e.g., 200 items × 200 items = 40000 rows > 10000 limit
+        large_array = [{"id": str(i)} for i in range(200)]
+        data = {
+            "name": "test",
+            "array1": large_array,
+            "array2": large_array,
+        }
+
+        content = json.dumps(data).encode("utf-8")
+
+        with pytest.raises(ValueError, match=f"limit: {MAX_EXPANDED_ROWS}"):
+            self.converter.convert(content)
+
+    def test_preview_nested2_pagination(self):
+        """Test pagination works correctly with expanded nested data."""
+        with open("tests/sample_files/nested2.json", "rb") as f:
+            content = f.read()
+
+        # Get first page
+        result = self.converter.preview(content, page=1, page_size=10)
+
+        assert result["total_rows"] == 28
+        assert result["total_pages"] == 3  # 28 rows / 10 per page = 3 pages
+        assert result["current_page"] == 1
+        assert len(result["rows"]) == 10
+
+        # Get last page
+        result = self.converter.preview(content, page=3, page_size=10)
+
+        assert result["current_page"] == 3
+        assert len(result["rows"]) == 8  # 28 - 20 = 8 remaining rows

@@ -1,16 +1,22 @@
 """JSON to CSV converter."""
 
 import io
+import itertools
 import json
 from typing import Any
 
 import pandas as pd
 
+from backend.config import MAX_EXPANDED_ROWS
 from backend.converters.base import BaseConverter
 
 
 class JsonToCsvConverter(BaseConverter):
-    """Converts JSON data to CSV format."""
+    """Converts JSON data to CSV format.
+
+    Handles nested JSON structures by expanding arrays into multiple rows
+    (Cartesian product / denormalization).
+    """
 
     def convert(self, content: bytes) -> bytes:
         """Convert JSON to CSV.
@@ -68,7 +74,8 @@ class JsonToCsvConverter(BaseConverter):
     def _json_to_dataframe(self, content: bytes) -> pd.DataFrame:
         """Parse JSON and convert to DataFrame.
 
-        Handles arrays of objects and flattens first level of nesting.
+        Handles arrays of objects and expands nested arrays into multiple rows
+        using Cartesian product (denormalization).
 
         Args:
             content: JSON content as bytes.
@@ -105,51 +112,106 @@ class JsonToCsvConverter(BaseConverter):
                 raise ValueError(
                     "JSON array must contain objects. Found non-object items in array."
                 )
-            # Flatten first level of nesting
-            flattened = [self._flatten_dict(item) for item in data]
-            return pd.DataFrame(flattened)
+            # Expand each object and combine all rows
+            all_rows: list[dict[str, Any]] = []
+            for item in data:
+                all_rows.extend(self._expand_object(item))
+            self._check_row_limit(len(all_rows))
+            return pd.DataFrame(all_rows)
+
         elif isinstance(data, dict):
-            # Check if it's a single object or has array values
-            # Try to find an array value to use as data
-            for value in data.values():
-                if isinstance(value, list) and value:
-                    if all(isinstance(item, dict) for item in value):
-                        flattened = [self._flatten_dict(item) for item in value]
-                        return pd.DataFrame(flattened)
-            # Single object - convert to single row
-            flattened = self._flatten_dict(data)
-            return pd.DataFrame([flattened])
+            # Single object - expand it fully
+            rows = self._expand_object(data)
+            self._check_row_limit(len(rows))
+            return pd.DataFrame(rows)
+
         else:
             raise ValueError(
                 f"Invalid JSON structure. Expected an array of objects or an object, "
                 f"but got {type(data).__name__}."
             )
 
-    def _flatten_dict(self, d: dict[str, Any], parent_key: str = "") -> dict[str, Any]:
-        """Flatten a dictionary by one level of nesting.
+    def _check_row_limit(self, row_count: int) -> None:
+        """Check if row count exceeds the safety limit.
 
         Args:
-            d: The dictionary to flatten.
-            parent_key: Prefix for nested keys.
+            row_count: Number of rows generated.
+
+        Raises:
+            ValueError: If row count exceeds MAX_EXPANDED_ROWS.
+        """
+        if row_count > MAX_EXPANDED_ROWS:
+            raise ValueError(
+                f"Expansion would create {row_count} rows (limit: {MAX_EXPANDED_ROWS}). "
+                f"The nested arrays in your JSON create too many combinations. "
+                f"Consider simplifying your JSON structure or processing it in parts."
+            )
+
+    def _expand_object(
+        self, obj: dict[str, Any], prefix: str = ""
+    ) -> list[dict[str, Any]]:
+        """Expand an object with nested arrays into multiple flat rows.
+
+        Creates the Cartesian product of all nested arrays, producing one row
+        per combination. Scalar fields are repeated in each row.
+
+        Args:
+            obj: The object to expand.
+            prefix: Prefix for nested keys (used for dot notation).
 
         Returns:
-            A flattened dictionary.
+            A list of flat dictionaries, one per row.
         """
-        items: list[tuple[str, Any]] = []
-        for k, v in d.items():
-            new_key = f"{parent_key}.{k}" if parent_key else k
-            if isinstance(v, dict):
-                # Flatten one level - nested dicts become dot-notation keys
-                for nested_k, nested_v in v.items():
-                    nested_key = f"{new_key}.{nested_k}"
-                    # Don't go deeper - convert deeper nesting to string
-                    if isinstance(nested_v, (dict, list)):
-                        items.append((nested_key, json.dumps(nested_v)))
-                    else:
-                        items.append((nested_key, nested_v))
-            elif isinstance(v, list):
-                # Convert lists to JSON string
-                items.append((new_key, json.dumps(v)))
+        # Separate scalars from nested structures
+        scalars: dict[str, Any] = {}
+        array_expansions: list[tuple[str, list[dict[str, Any]]]] = []
+
+        for key, value in obj.items():
+            full_key = f"{prefix}{key}"
+
+            if isinstance(value, dict):
+                # Recursively expand nested objects
+                nested_rows = self._expand_object(value, f"{full_key}.")
+                if len(nested_rows) == 1:
+                    # Single row - merge into scalars
+                    scalars.update(nested_rows[0])
+                else:
+                    # Multiple rows - add to array expansions
+                    array_expansions.append((full_key, nested_rows))
+
+            elif isinstance(value, list):
+                if value and all(isinstance(item, dict) for item in value):
+                    # Array of objects - expand each item with key prefix
+                    expanded_items: list[dict[str, Any]] = []
+                    for item in value:
+                        item_rows = self._expand_object(item, f"{full_key}.")
+                        expanded_items.extend(item_rows)
+                    array_expansions.append((full_key, expanded_items))
+                elif value:
+                    # Array of primitives - convert to JSON string
+                    scalars[full_key] = json.dumps(value)
+                else:
+                    # Empty array
+                    scalars[full_key] = "[]"
+
             else:
-                items.append((new_key, v))
-        return dict(items)
+                # Scalar value
+                scalars[full_key] = value
+
+        # If no arrays to expand, return single row with scalars
+        if not array_expansions:
+            return [scalars] if scalars else [{}]
+
+        # Compute Cartesian product of all array expansions
+        array_rows_list = [rows for _, rows in array_expansions]
+        product = list(itertools.product(*array_rows_list))
+
+        # Combine scalars with each product combination
+        result: list[dict[str, Any]] = []
+        for combination in product:
+            row = scalars.copy()
+            for expanded_row in combination:
+                row.update(expanded_row)
+            result.append(row)
+
+        return result if result else [scalars]
