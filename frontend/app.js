@@ -322,5 +322,97 @@ function hideError() {
     errorMessage.classList.add('hidden')
 }
 
+// Feedback form elements (initialized in initFeedback)
+let feedbackToggle
+let feedbackFormContainer
+let feedbackForm
+
+// Initialize feedback form
+function initFeedback() {
+    feedbackToggle = document.getElementById('feedback-toggle')
+    feedbackFormContainer = document.getElementById('feedback-form-container')
+    feedbackForm = document.getElementById('feedback-form')
+
+    if (!feedbackToggle || !feedbackFormContainer || !feedbackForm) {
+        console.error('Feedback elements not found')
+        return
+    }
+
+    feedbackToggle.addEventListener('click', () => {
+        feedbackFormContainer.classList.toggle('hidden')
+        feedbackToggle.textContent = feedbackFormContainer.classList.contains('hidden')
+            ? 'Send Feedback'
+            : 'Close'
+    })
+
+    feedbackForm.addEventListener('submit', handleFeedbackSubmit)
+}
+
+// Handle feedback form submission
+async function handleFeedbackSubmit(e) {
+    e.preventDefault()
+
+    const form = e.target
+    const submitBtn = form.querySelector('.feedback-submit')
+    const emailInput = form.querySelector('#feedback-email')
+    const messageInput = form.querySelector('#feedback-message')
+    const originalText = submitBtn.textContent
+    submitBtn.disabled = true
+    submitBtn.textContent = 'Sending...'
+
+    try {
+        const response = await fetch(`${API_BASE}/feedback`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                email: emailInput.value,
+                message: messageInput.value
+            })
+        })
+
+        if (!response.ok) {
+            const error = await response.json()
+            throw new Error(error.detail || 'Failed to send feedback')
+        }
+
+        // Show success message
+        feedbackFormContainer.innerHTML = '<p class="feedback-success">Thank you for your feedback!</p>'
+
+        // Reset after 3 seconds
+        setTimeout(() => {
+            feedbackFormContainer.innerHTML = `
+                <form id="feedback-form" class="feedback-form">
+                    <input
+                        type="email"
+                        id="feedback-email"
+                        placeholder="Email (optional)"
+                        class="feedback-input"
+                    >
+                    <textarea
+                        id="feedback-message"
+                        placeholder="Your feedback..."
+                        class="feedback-textarea"
+                        required
+                    ></textarea>
+                    <button type="submit" class="feedback-submit">Send</button>
+                </form>
+            `
+            feedbackFormContainer.classList.add('hidden')
+            feedbackToggle.textContent = 'Send Feedback'
+            // Re-attach event listener to new form
+            document.getElementById('feedback-form').addEventListener('submit', handleFeedbackSubmit)
+        }, 3000)
+    } catch (error) {
+        showError(error.message)
+        submitBtn.disabled = false
+        submitBtn.textContent = originalText
+    }
+}
+
 // Initialize on DOM ready
-document.addEventListener('DOMContentLoaded', init)
+document.addEventListener('DOMContentLoaded', () => {
+    init()
+    initFeedback()
+})

@@ -69,3 +69,7 @@ def get_cors_origins() -> list[str]:
 
 # CORS settings (computed based on environment)
 CORS_ORIGINS: list[str] = get_cors_origins()
+
+
+# Discord webhook for feedback (optional)
+DISCORD_WEBHOOK_URL: str | None = os.getenv("DISCORD_WEBHOOK_URL")

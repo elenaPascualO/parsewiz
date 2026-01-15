@@ -2,12 +2,20 @@
 
 from pathlib import Path
 
+import httpx
 from fastapi import FastAPI, File, Form, HTTPException, UploadFile
+from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, Response
 from fastapi.staticfiles import StaticFiles
 
-from backend.config import ALLOWED_CONVERSIONS, CORS_ORIGINS, MIME_TYPES, PREVIEW_ROWS
+from backend.config import (
+    ALLOWED_CONVERSIONS,
+    CORS_ORIGINS,
+    DISCORD_WEBHOOK_URL,
+    MIME_TYPES,
+    PREVIEW_ROWS,
+)
 from backend.converters import (
     CsvToExcelConverter,
     CsvToJsonConverter,
@@ -195,6 +203,55 @@ async def convert_file(
         media_type=mime_type,
         headers={"Content-Disposition": content_disposition},
     )
+
+
+class FeedbackRequest(BaseModel):
+    """Request model for feedback submission."""
+
+    email: str = ""
+    message: str
+
+
+@app.post("/api/feedback")
+async def send_feedback(feedback: FeedbackRequest) -> dict[str, str]:
+    """Send user feedback to Discord webhook.
+
+    Args:
+        feedback: The feedback data with optional email and message.
+
+    Returns:
+        Status dictionary.
+
+    Raises:
+        HTTPException: If feedback cannot be sent.
+    """
+    if not feedback.message.strip():
+        raise HTTPException(status_code=400, detail="Message is required")
+
+    if not DISCORD_WEBHOOK_URL:
+        raise HTTPException(status_code=503, detail="Feedback service not configured")
+
+    payload = {
+        "embeds": [
+            {
+                "title": "New Feedback",
+                "fields": [
+                    {"name": "From", "value": feedback.email or "Anonymous"},
+                    {"name": "Message", "value": feedback.message[:1000]},
+                ],
+                "color": 5814783,
+            }
+        ]
+    }
+
+    try:
+        async with httpx.AsyncClient() as client:
+            response = await client.post(DISCORD_WEBHOOK_URL, json=payload, timeout=10.0)
+            response.raise_for_status()
+    except httpx.HTTPError as e:
+        raise HTTPException(status_code=503, detail="Failed to send feedback") from e
+
+    return {"status": "sent"}
 
 
 # Mount frontend static files

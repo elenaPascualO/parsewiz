@@ -78,6 +78,33 @@
         </main>
 
         <footer>
+            <!-- Privacy Disclaimer -->
+            <div class="disclaimer">
+                <p>Your privacy matters. Files are processed in memory and never stored on our servers.</p>
+            </div>
+
+            <!-- Feedback Form -->
+            <div class="feedback-section">
+                <button id="feedback-toggle" class="feedback-toggle">Send Feedback</button>
+                <div id="feedback-form-container" class="feedback-form-container hidden">
+                    <form id="feedback-form" class="feedback-form">
+                        <input
+                            type="email"
+                            id="feedback-email"
+                            placeholder="Email (optional)"
+                            class="feedback-input"
+                        >
+                        <textarea
+                            id="feedback-message"
+                            placeholder="Your feedback..."
+                            class="feedback-textarea"
+                            required
+                        ></textarea>
+                        <button type="submit" class="feedback-submit">Send</button>
+                    </form>
+                </div>
+            </div>
+
             <p>DataToolkit &copy; 2026</p>
         </footer>
     </div>
