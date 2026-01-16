@@ -19,7 +19,7 @@ Launch a functional MVP to validate real demand for a JSON ↔ CSV ↔ Excel con
 ### Characteristics
 
 - [x] **File upload**: drag & drop or file selector button
-- [x] **Data preview**: show first 10 rows in HTML table
+- [x] **Data preview**: show rows in HTML table
 - [x] **Direct download**: converted file ready to download
 - [x] **No registration**: completely anonymous usage
 - [x] **No initial limits**: any (reasonable) size for now
@@ -185,7 +185,7 @@ Get file preview without converting.
 ### DevOps
 - [x] Setup Git repository
 - [ ] Configure deploy on Railway/Render/Fly.io
-- [ ] Domain (can be free subdomain initially)
+- [ ] Domain (custom domain)
 - [ ] HTTPS
 
 ---
@@ -249,3 +249,23 @@ See `doc/SPECIFICATIONS.md` for full security specifications.
 - [x] **Nested array expansion**: JSON with nested arrays (like batters + toppings) now expands via Cartesian product
 - [x] **Single object support**: Single objects with multiple nested arrays preserve all fields
 - [x] **Safety limit**: MAX_EXPANDED_ROWS=10000 prevents memory issues from large expansions
+
+### Raw Editor for Malformed Files (January 2026)
+
+- [x] **Raw text editor**: When JSON or CSV files fail to parse, users see a raw text editor instead of an error toast
+- [x] **Inline error display**: Parse error message shown above the editor with line/column info
+- [x] **Line numbers**: Editor displays line numbers for easy error location
+- [x] **Retry functionality**: Users can edit the content and retry parsing without re-uploading
+- [x] **Seamless flow**: Once fixed, the file proceeds to the normal table preview
+
+### Smart JSON Handling for Complex Structures (January 2026)
+
+- [x] **Automatic complexity detection**: Analyzes JSON structure to detect multiple arrays that would cause Cartesian explosion
+- [x] **Simplified UX flow**: When complex JSON detected (>100 estimated rows), shows info message with "Next" button
+- [x] **Tabbed preview**: Users compare both export options side-by-side:
+  - **Multi-file tab**: Preview of normalized tables (one per array)
+  - **Single-file tab**: Preview with arrays as JSON text columns
+- [x] **Multi-sheet Excel export**: Complex JSON exports to multiple sheets linked by `_record_id`
+- [x] **Multi-CSV ZIP export**: Complex JSON exports to ZIP containing multiple CSV files
+- [x] **New /api/analyze endpoint**: Pre-analyze JSON complexity before conversion
+- [x] **Updated convert/preview**: Accept `export_mode` parameter (normal, multi_table, single_row)
