@@ -53,7 +53,7 @@
 
                 <div class="editor-actions">
                     <button id="retry-parse-button" class="retry-btn">Retry Parse</button>
-                    <button id="editor-reset-button" class="reset-button">Upload another file</button>
+                    <button id="editor-reset-button" class="reset-button">Start Over</button>
                 </div>
             </section>
 
@@ -63,6 +63,7 @@
                     <h3>Complex JSON Detected</h3>
                     <p id="complexity-info" class="complexity-info"></p>
                     <p class="mode-next-step">In the next step, you can preview and compare two export options: <strong>Multiple Tables</strong> (one table per data type) or <strong>Single Compact Row</strong> (arrays as JSON text).</p>
+                    <p class="mode-tip">💡 <strong>Tip:</strong> In Multiple Tables mode, a <code>_record_id</code> column is automatically added to help you link related records across different tables.</p>
 
                     <div class="mode-actions">
                         <button id="proceed-export-mode" class="proceed-btn">Next</button>
@@ -109,6 +110,8 @@
                     <!-- Dynamically populated with table previews -->
                 </div>
 
+                <p class="table-hint">💡 Hover over cells to view full content</p>
+
                 <div class="pagination-controls">
                     <button id="prev-page" class="pagination-btn" disabled>Previous</button>
                     <span id="page-info" class="page-info">Page 1 of 1</span>
@@ -127,7 +130,7 @@
                     <div id="convert-buttons" class="convert-buttons"></div>
                 </div>
 
-                <button id="reset-button" class="reset-button">Upload another file</button>
+                <button id="reset-button" class="reset-button">Start Over</button>
             </section>
 
             <!-- Loading Overlay -->

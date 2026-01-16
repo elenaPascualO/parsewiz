@@ -612,8 +612,6 @@ function renderMultiTableAccordion(tables) {
         const tableData = tables[tableName]
         const item = document.createElement('div')
         item.className = 'accordion-item'
-        // Expand first item (main) by default
-        if (index === 0) item.classList.add('expanded')
 
         item.innerHTML = `
             <div class="accordion-header">

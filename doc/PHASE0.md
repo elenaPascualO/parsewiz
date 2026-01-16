@@ -222,6 +222,8 @@ Issues identified during usage that have been addressed:
 
 - [x] **Pagination for large files**: Added Previous/Next pagination controls with page indicator. Users can navigate through all data rows (10 per page by default, max 100).
 - [x] **Preserve data exactly as in file**: Preview now reads all data as strings, preserving leading zeroes (e.g., "007" stays "007").
+- [x] **Hover hint**: Added "💡 Hover over cells to view full content" message above preview tables
+- [x] **Start Over button**: Renamed "Upload another file" to "Start Over" for clearer UX
 
 ### New Conversions
 
@@ -262,8 +264,9 @@ See `doc/SPECIFICATIONS.md` for full security specifications.
 
 - [x] **Automatic complexity detection**: Analyzes JSON structure to detect multiple arrays that would cause Cartesian explosion
 - [x] **Simplified UX flow**: When complex JSON detected (>100 estimated rows), shows info message with "Next" button
+- [x] **`_record_id` explanation**: Info screen includes tip explaining the auto-generated column that links related records across tables
 - [x] **Tabbed preview**: Users compare both export options side-by-side:
-  - **Multi-file tab**: Preview of normalized tables (one per array)
+  - **Multi-file tab**: Preview of normalized tables (all collapsed by default)
   - **Single-file tab**: Preview with arrays as JSON text columns
 - [x] **Multi-sheet Excel export**: Complex JSON exports to multiple sheets linked by `_record_id`
 - [x] **Multi-CSV ZIP export**: Complex JSON exports to ZIP containing multiple CSV files

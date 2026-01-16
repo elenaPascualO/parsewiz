@@ -62,10 +62,15 @@ Phase 0 (MVP) complete with basic file conversions. Pending deployment.
 #### Complex JSON Handling
 - Automatic complexity detection (threshold: >100 estimated rows from multiple arrays)
 - Info screen explains detected complexity with "Next" button
+- Tip explaining `_record_id` column (auto-added to link related records across tables)
 - Tabbed preview to compare export options:
-  - **Multi-file**: Accordion view showing each table (main, arrays)
+  - **Multi-file**: Accordion view showing each table (all collapsed by default)
   - **Single-file**: Compact view with arrays as JSON text columns
 - Download uses the currently selected tab's export mode
+
+#### Preview UX Enhancements
+- Hover hint message above tables ("💡 Hover over cells to view full content")
+- "Start Over" button (renamed from "Upload another file") for clearer reset action
 
 #### Raw Editor for Malformed Files
 - Shows raw text editor when JSON/CSV files fail to parse

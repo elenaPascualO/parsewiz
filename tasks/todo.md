@@ -19,6 +19,7 @@ _Security Implementation (P0) - Complete_
 
 - [x] **Complexity analysis**: New `/api/analyze` endpoint to detect complex JSON before conversion
 - [x] **Simplified UX flow**: Info message with "Next" button leads directly to preview with tabs
+- [x] **`_record_id` explanation**: Tip in info screen explains the auto-generated column for linking records
 - [x] **Preview with tabs**: Toggle between "Multi-file" and "Single-file" views to compare options
 - [x] **Multi-table export**: Normalized output with one table per array
   - Excel: Multiple sheets linked by `_record_id`
@@ -39,6 +40,9 @@ _Security Implementation (P0) - Complete_
 
 - [x] **Privacy disclaimer**: Added footer text informing users files are processed in memory
 - [x] **Feedback form**: Discord webhook integration for collecting user feedback
+- [x] **Hover hint**: Added "💡 Hover over cells to view full content" message above preview tables
+- [x] **Start Over button**: Renamed "Upload another file" to "Start Over" for clearer UX
+- [x] **Accordion default collapsed**: Multi-table accordion now shows all tables collapsed by default
 
 ### Security Implementation (January 2026)
 
