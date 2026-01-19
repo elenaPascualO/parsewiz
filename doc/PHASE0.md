@@ -1,4 +1,4 @@
-# Phase 0 — MVP ParserWiz (Complete)
+# Phase 0 — MVP ParseWiz (Complete)
 
 **Status:** Complete (January 2026) - 78 tests passing
 
@@ -58,7 +58,7 @@ Launch a functional MVP to validate real demand for a JSON ↔ CSV ↔ Excel con
 ### Main Screen
 ```
 ┌─────────────────────────────────────────────┐
-│  🔄 ParserWiz                             │
+│  🔄 ParseWiz                             │
 │                                             │
 │  ┌─────────────────────────────────────┐   │
 │  │                                     │   │
@@ -96,7 +96,7 @@ Launch a functional MVP to validate real demand for a JSON ↔ CSV ↔ Excel con
 ## File Structure
 
 ```
-parserwiz/
+parsewiz/
 ├── backend/
 │   ├── main.py              # FastAPI app
 │   ├── converters/

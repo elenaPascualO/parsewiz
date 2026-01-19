@@ -1,4 +1,4 @@
-# Technical Stack — ParserWiz
+# Technical Stack — ParseWiz
 
 ## Summary
 
@@ -211,7 +211,7 @@ brew install uv
 ```bash
 # Clone repo
 git clone <repo-url>
-cd parserwiz
+cd parsewiz
 
 # Initialize project with uv (creates pyproject.toml)
 uv init

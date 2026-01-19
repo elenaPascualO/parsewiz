@@ -1,4 +1,4 @@
-"""Security utilities for ParserWiz."""
+"""Security utilities for ParseWiz."""
 
 import os
 import re
