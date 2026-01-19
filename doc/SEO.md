@@ -1,6 +1,6 @@
 # SEO Configuration
 
-This document describes the SEO setup for DataToolkit (www.datatoolkit.pro).
+This document describes the SEO setup for ParserWiz (www.parserwiz.app).
 
 ## Overview
 
@@ -26,9 +26,9 @@ SEO elements were added to improve discoverability through search engines and so
 ```html
 <meta name="description" content="Free online tool to convert JSON, CSV, and Excel files instantly. No signup required. Transform data formats, preview before download, handle complex nested JSON structures.">
 <meta name="keywords" content="JSON to CSV, CSV to JSON, Excel converter, data conversion, JSON to Excel, CSV to Excel, file converter, data transformation, online converter">
-<meta name="author" content="DataToolkit">
+<meta name="author" content="ParserWiz">
 <meta name="robots" content="index, follow">
-<link rel="canonical" href="https://www.datatoolkit.pro/">
+<link rel="canonical" href="https://www.parserwiz.app/">
 ```
 
 ### Search Engine Verification
@@ -43,21 +43,21 @@ Note: Bing was configured by importing from Google Search Console, so no separat
 
 ```html
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://www.datatoolkit.pro/">
-<meta property="og:title" content="DataToolkit - Convert JSON, CSV, Excel Files Online Free">
+<meta property="og:url" content="https://www.parserwiz.app/">
+<meta property="og:title" content="ParserWiz - Convert JSON, CSV, Excel Files Online Free">
 <meta property="og:description" content="Free online tool to convert JSON, CSV, and Excel files instantly. No signup required. Transform data formats with live preview.">
-<meta property="og:image" content="https://www.datatoolkit.pro/og-image.png">
-<meta property="og:site_name" content="DataToolkit">
+<meta property="og:image" content="https://www.parserwiz.app/og-image.png">
+<meta property="og:site_name" content="ParserWiz">
 ```
 
 ### Twitter Cards
 
 ```html
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:url" content="https://www.datatoolkit.pro/">
-<meta name="twitter:title" content="DataToolkit - Convert JSON, CSV, Excel Files Online Free">
+<meta name="twitter:url" content="https://www.parserwiz.app/">
+<meta name="twitter:title" content="ParserWiz - Convert JSON, CSV, Excel Files Online Free">
 <meta name="twitter:description" content="Free online tool to convert JSON, CSV, and Excel files instantly. No signup required.">
-<meta name="twitter:image" content="https://www.datatoolkit.pro/og-image.png">
+<meta name="twitter:image" content="https://www.parserwiz.app/og-image.png">
 ```
 
 ### Favicon Links
@@ -77,9 +77,9 @@ A WebApplication schema is included in index.html:
 {
     "@context": "https://schema.org",
     "@type": "WebApplication",
-    "name": "DataToolkit",
+    "name": "ParserWiz",
     "description": "Free online tool to convert JSON, CSV, and Excel files instantly. No signup required.",
-    "url": "https://www.datatoolkit.pro/",
+    "url": "https://www.parserwiz.app/",
     "applicationCategory": "UtilitiesApplication",
     "operatingSystem": "Any",
     "offers": {
@@ -106,13 +106,13 @@ A WebApplication schema is included in index.html:
 
 - URL: https://search.google.com/search-console
 - Status: Verified via HTML meta tag
-- Sitemap: Submitted at `https://www.datatoolkit.pro/sitemap.xml`
+- Sitemap: Submitted at `https://www.parserwiz.app/sitemap.xml`
 
 ### Bing Webmaster Tools
 
 - URL: https://www.bing.com/webmasters
 - Status: Verified (imported from Google Search Console)
-- Sitemap: Submit at `https://www.datatoolkit.pro/sitemap.xml`
+- Sitemap: Submit at `https://www.parserwiz.app/sitemap.xml`
 
 ## Testing Tools
 
