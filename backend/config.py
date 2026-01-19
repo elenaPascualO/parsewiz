@@ -1,4 +1,4 @@
-"""Configuration settings for ParserWiz."""
+"""Configuration settings for ParseWiz."""
 
 import os
 

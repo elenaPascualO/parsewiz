@@ -1,4 +1,4 @@
-// ParserWiz Frontend Application
+// ParseWiz Frontend Application
 
 const API_BASE = '/api'
 

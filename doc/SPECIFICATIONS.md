@@ -1,8 +1,8 @@
-# ParserWiz — Technical Specifications
+# ParseWiz — Technical Specifications
 
 ## 1. Overview
 
-**Product Name:** ParserWiz
+**Product Name:** ParseWiz
 **Version:** 0.2.0 (Phase 1 - Consolidate Conversions)
 **Purpose:** Web tool for conversion, cleaning, and manipulation of tabular data (JSON, CSV, Excel)
 

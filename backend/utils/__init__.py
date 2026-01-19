@@ -1,4 +1,4 @@
-"""Utility modules for ParserWiz."""
+"""Utility modules for ParseWiz."""
 
 from backend.utils.file_detection import detect_file_type
 from backend.utils.validators import validate_file

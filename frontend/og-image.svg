@@ -40,7 +40,7 @@
   </g>
 
   <!-- Text content -->
-  <text x="350" y="280" font-family="system-ui, -apple-system, sans-serif" font-size="72" font-weight="700" fill="white">ParserWiz</text>
+  <text x="350" y="280" font-family="system-ui, -apple-system, sans-serif" font-size="72" font-weight="700" fill="white">ParseWiz</text>
   <text x="350" y="350" font-family="system-ui, -apple-system, sans-serif" font-size="32" fill="rgba(255,255,255,0.9)">Convert JSON, CSV, and Excel files instantly</text>
 
   <!-- Feature badges -->
@@ -56,5 +56,5 @@
   </g>
 
   <!-- URL at bottom -->
-  <text x="600" y="580" font-family="system-ui, sans-serif" font-size="24" fill="rgba(255,255,255,0.7)" text-anchor="middle">www.parserwiz.app</text>
+  <text x="600" y="580" font-family="system-ui, sans-serif" font-size="24" fill="rgba(255,255,255,0.7)" text-anchor="middle">www.parsewiz.app</text>
 </svg>
