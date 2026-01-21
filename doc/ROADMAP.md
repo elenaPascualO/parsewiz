@@ -24,6 +24,7 @@ Web tool for conversion, cleaning, and manipulation of tabular data (JSON, CSV, 
 - [x] Basic and functional UI
 - [x] Privacy disclaimer
 - [x] Feedback form (Discord webhook)
+- [x] PWA support (installable on mobile)
 
 ### Security (P0)
 - [x] Filename sanitization

@@ -28,6 +28,14 @@
     <meta name="twitter:description" content="Free online tool to convert JSON, CSV, and Excel files instantly. No signup required.">
     <meta name="twitter:image" content="https://www.parsewiz.app/og-image.png">
 
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#8b5cf6">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="ParseWiz">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="manifest" href="/manifest.json">
+
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -59,6 +67,56 @@
             "Built-in JSON error fixing with inline editor",
             "Table-view preview before download",
             "Smart complex nested JSON handling with multiple export options"
+        ]
+    }
+    </script>
+
+    <!-- FAQ Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "How do I convert JSON to CSV?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Simply drag and drop your JSON file onto the upload area (or click to select it). ParseWiz will automatically detect the format, show you a preview, and let you download as CSV with one click."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "What if my JSON file has errors?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Unlike other converters that just show 'Parse Error', ParseWiz opens an inline editor showing exactly where the error is. Fix it directly in your browser and retry - no need to open another tool."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Can I convert nested or complex JSON?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes! ParseWiz detects complex structures automatically and offers two export options: split into multiple linked tables (with automatic record IDs for easy joining) or keep everything in a single compact row."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Is my data safe?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Your files are uploaded securely for processing and immediately discarded after conversion. We never store your data on disk or share it with third parties."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "What file formats are supported?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "ParseWiz supports JSON, CSV, and Excel files (.xlsx, .xls). You can convert between any of these formats freely. CSV delimiters (comma, semicolon, tab) are auto-detected."
+                }
+            }
         ]
     }
     </script>

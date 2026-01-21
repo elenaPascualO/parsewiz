@@ -44,5 +44,6 @@ Phase 0 (MVP) completed January 2026 with 91 tests passing.
 - Security: filename sanitization, headers, CORS
 - Privacy disclaimer and feedback form
 - Responsive UI
+- PWA support (installable on mobile devices)
 
 See `doc/PHASE0.md` for full details.
