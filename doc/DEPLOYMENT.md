@@ -103,32 +103,40 @@ curl https://your-railway-url.up.railway.app/api/health
 
 ## Custom Domain Setup
 
+ParseWiz uses `www.parsewiz.app` as the primary domain, with apex domain (`parsewiz.app`) redirecting to it.
+
 ### Railway side
 
 1. Go to **Settings** → **Networking** → **Custom Domain**
-2. Enter your domain (e.g., `parsewiz.example.com`)
-3. Railway provides a CNAME target
+2. Add `www.parsewiz.app`
+3. Railway provides a CNAME target (e.g., `58q5h1yv.up.railway.app`)
 
-### DNS side
+### DNS side (Porkbun)
 
-Add a CNAME record in your DNS provider:
+Configure the following DNS records:
 
-| Type | Name | Value |
+| Type | Host | Value |
 |------|------|-------|
-| CNAME | `parsewiz` | `your-app.up.railway.app` |
+| CNAME | `www.parsewiz.app` | `58q5h1yv.up.railway.app` |
+| ALIAS | `parsewiz.app` | `uixie.porkbun.com` |
+| TXT | `_acme-challenge.parsewiz.app` | (SSL certificate validation) |
+
+### URL Forwarding (Porkbun)
+
+Set up URL forwarding for the apex domain:
+
+| Host | Destination | Type | Include Path | Wildcard |
+|------|-------------|------|--------------|----------|
+| `parsewiz.app` | `https://www.parsewiz.app` | Permanent (301) | No | Yes |
+
+This ensures visitors to `parsewiz.app` are redirected to `www.parsewiz.app`.
 
 ### Update CORS
 
-After adding your custom domain, update `ALLOWED_ORIGINS`:
+Ensure `ALLOWED_ORIGINS` includes your domain:
 
 ```
-ALLOWED_ORIGINS=https://parsewiz.example.com
-```
-
-For multiple origins (comma-separated):
-
-```
-ALLOWED_ORIGINS=https://parsewiz.example.com,https://www.parsewiz.example.com
+ALLOWED_ORIGINS=https://www.parsewiz.app
 ```
 
 **Hobby plan limit**: 2 custom domains per service.

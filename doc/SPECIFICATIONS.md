@@ -411,8 +411,7 @@ CORS_ORIGINS = [
 #### Production
 ```python
 CORS_ORIGINS = [
-    "https://yourdomain.com",
-    "https://www.yourdomain.com",
+    "https://www.parsewiz.app",
 ]
 # Or use environment variable: ALLOWED_ORIGINS
 ```
@@ -556,7 +555,7 @@ Railway (or alternatives: Render, Fly.io)
 ```
 ENVIRONMENT=production
 MAX_FILE_SIZE_MB=10
-ALLOWED_ORIGINS=https://yourdomain.com
+ALLOWED_ORIGINS=https://www.parsewiz.app
 ```
 
 ---

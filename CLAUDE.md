@@ -107,9 +107,9 @@ See `doc/` folder for detailed specifications:
 ## Environment Variables (Production)
 
 ```bash
-ENVIRONMENT=production          # Enables production mode
-ALLOWED_ORIGINS=https://domain.com  # CORS origins (comma-separated)
-MAX_FILE_SIZE_MB=10            # Max upload size in MB
+ENVIRONMENT=production                # Enables production mode
+ALLOWED_ORIGINS=https://www.parsewiz.app  # CORS origins (comma-separated)
+MAX_FILE_SIZE_MB=10                   # Max upload size in MB
 ```
 
 ## General Guidelines
