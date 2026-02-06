@@ -226,54 +226,62 @@ These features set ParseWiz apart from competitors like ConvertCSV.com and JSON-
 - **Quora** - Answer questions about "how to convert JSON to CSV"
 - **Stack Overflow** - Only where genuinely helpful (follow self-promotion rules)
 
-### Content Strategy
+### Keyword Strategy (Updated February 2026)
 
-#### Target Keywords
+#### Competition Analysis
 
-These keywords target user intent (not developer intent):
+| Category | Keywords | Competition | Strategy |
+|----------|----------|-------------|----------|
+| 🔴 **Avoid** | "json to csv converter", "csv to json online", "excel to csv" | High - dominated by ConvertCSV, CSVJSON, CodeBeautify | Don't target directly; won't outrank without significant domain authority |
+| 🟡 **Medium Opportunity** | "nested json to csv", "flatten json to csv online", "complex json to csv", "json array to csv converter" | Medium - fewer quality competitors | Target with landing pages; ParseWiz already handles this well |
+| 🟢 **Best Opportunity** | "csv to sql insert statements", "excel to sql generator online", "convert spreadsheet to sql" | Low - fewer quality tools exist | Build Phase 2 (SQL Generator) to capture this niche |
+| 🎯 **Long-Tail** | Problem-based queries (see below) | Low | Content marketing / blog posts |
 
-| Keyword | Search Intent | Content Idea |
-|---------|---------------|--------------|
-| convert json to csv online free | Direct tool search | Homepage optimization |
-| how to open json file in excel | Tutorial seekers | Blog post |
-| json to excel converter no signup | Privacy-conscious users | Highlight no-upload feature |
-| convert csv to json without coding | Non-technical users | Blog post |
-| nested json to csv | Users with complex data | Blog post about flattening |
-| excel to json converter online | Reverse conversion | Dedicated landing section |
+#### Long-Tail Keywords (Content Opportunities)
 
-#### Blog Post Ideas
+These target specific pain points developers and analysts face:
 
-1. **"How to Convert JSON to CSV Without Installing Software"**
-   - Target: Users searching for quick solutions
-   - Include screenshots of ParseWiz workflow
+| Keyword | Intent | Content Type |
+|---------|--------|--------------|
+| "how to convert API response to CSV" | Developer with API data | Blog post + tool demo |
+| "flatten hierarchical JSON for Excel" | Analyst with nested data | Tutorial |
+| "export Postman collection to spreadsheet" | API tester | Blog post |
+| "convert MongoDB export to CSV" | Database admin | Tutorial |
+| "json with arrays to excel" | User with complex JSON | Landing page section |
+| "fix json syntax errors online" | User with broken JSON | Highlight raw editor feature |
 
-2. **"Understanding JSON for Excel Users: A Non-Technical Guide"**
-   - Target: Excel users encountering JSON for first time
-   - Explain what JSON is, when they'll encounter it
+#### Strategic Recommendation
 
-3. **"5 Ways to Handle Nested JSON Data (Without Coding)"**
-   - Target: Users with complex API exports
-   - Position ParseWiz's "Multiple Tables" feature
+**Prioritize Phase 2 (SQL Generator) over completing Phase 1.**
 
-4. **"CSV vs JSON vs Excel: Which Format Should You Use?"**
-   - Target: Educational content that attracts links
-   - Comparison table, when to use each format
+Rationale:
+- The "Excel/CSV to SQL" niche has less competition than JSON/CSV converters
+- Developers who need SQL generation are more likely to share/recommend tools
+- It creates a genuine differentiator vs. existing converter tools
 
-#### Future Enhancement: Dedicated Landing Pages
+#### Target Keywords by Page
 
-Consider creating dedicated pages for each conversion type to rank for specific queries:
-- `/json-to-csv`
-- `/csv-to-json`
-- `/excel-to-json`
-- `/json-to-excel`
+| Page | Primary Keyword | Secondary Keywords |
+|------|-----------------|-------------------|
+| Homepage | "data converter online" | json csv excel converter, file format converter, nested json to csv |
+| `/excel-to-sql` (Phase 3) | "excel to sql insert" | csv to sql statements, spreadsheet to sql online |
+| Blog (future) | Long-tail keywords | See table above |
+
+#### Blog Post Ideas (Deferred)
+
+Blog is deprioritized until landing pages and SQL generator are complete. These are ideas for later:
+
+- "How to Convert API Response JSON to CSV" → targets: api response to csv
+- "5 Ways to Handle Nested JSON Data" → targets: nested json to csv
+- "How to Generate SQL INSERT Statements from Excel" → targets: excel to sql insert
 
 ### Action Plan
 
-This is the phased action plan for growing ParseWiz visibility. Work through phases in order.
+This is the phased action plan for growing ParseWiz visibility. Updated February 2026 based on keyword research.
+
+---
 
 #### Phase 1: On-Page Improvements ✅ COMPLETED
-
-Improve the homepage to better communicate value and rank for target keywords.
 
 - [x] Add "Features" section highlighting the 3 key differentiators
 - [x] Add "How It Works" section (3-step visual guide)
@@ -281,9 +289,43 @@ Improve the homepage to better communicate value and rank for target keywords.
 - [x] Add FAQ section (helps SEO with question-based queries)
 - [x] Update structured data (JSON-LD) to include new features
 
-#### Phase 2: Directory Submissions
+---
 
-Submit to tool directories for passive discovery and backlinks.
+#### Phase 2: Landing Pages ❌ REJECTED
+
+**Decision (February 2026):** Dedicated landing pages were considered but rejected to maintain app simplicity. The single-page approach is cleaner and easier to maintain.
+
+**Alternative strategy:** Focus on:
+1. Expanding the FAQ section with more specific questions
+2. Building the SQL Generator feature (unique differentiator)
+3. Content marketing through external channels
+
+---
+
+#### Phase 3: Build SQL Generator (Strategic Differentiator) ⬅️ CURRENT
+
+**Why prioritize this over Phase 1 roadmap items (JSONL, TSV, etc.):**
+- Less competition than JSON/CSV space
+- Targets developers who share tools
+- Creates genuine differentiation
+
+| Feature | Target Keywords | Priority |
+|---------|-----------------|----------|
+| CSV → SQL INSERT | "csv to sql insert statements" | High |
+| Excel → SQL INSERT | "excel to sql generator online" | High |
+| CREATE TABLE + INSERT | "generate create table from csv" | Medium |
+| Dialect selector | "postgresql insert generator", "mysql insert from csv" | Medium |
+
+**After building:**
+- [ ] Create `/excel-to-sql` landing page
+- [ ] Create `/csv-to-sql` landing page
+- [ ] Write blog post: "How to Generate SQL INSERT Statements from Excel"
+
+---
+
+#### Phase 4: Directory Submissions
+
+Submit to tool directories for backlinks. Do this after landing pages exist.
 
 | Directory | URL | Status |
 |-----------|-----|--------|
@@ -291,63 +333,41 @@ Submit to tool directories for passive discovery and backlinks.
 | Product Hunt | https://producthunt.com | [ ] Not started |
 | SaaSHub | https://saashub.com | [ ] Not started |
 | ToolPilot.ai | https://toolpilot.ai | [ ] Not started |
-| Slant | https://slant.co | [ ] Not started |
 
 **Notes:**
-- AlternativeTo: List as alternative to ConvertCSV, JSON-CSV.com
-- Product Hunt: Best to launch Tuesday-Thursday. Prepare tagline, description, screenshots.
+- AlternativeTo: List as alternative to ConvertCSV, JSON-CSV.com, TableConvert
+- Product Hunt: Best to launch Tuesday-Thursday. Wait until SQL generator is live for stronger differentiation.
 
-#### Phase 3: Landing Pages
+---
 
-Create dedicated pages for each conversion type to rank for high-intent keywords.
+#### Phase 5: Content Marketing (Deferred)
 
-| Page | Target Keywords | Status |
-|------|-----------------|--------|
-| `/json-to-csv` | "json to csv converter", "convert json to csv online" | [ ] Not started |
-| `/csv-to-json` | "csv to json converter", "convert csv to json" | [ ] Not started |
-| `/json-to-excel` | "json to excel converter", "open json in excel" | [ ] Not started |
-| `/excel-to-json` | "excel to json converter" | [ ] Not started |
+Blog is deprioritized. Focus on landing pages and SQL generator first. Revisit after Phase 4.
 
-**Each landing page should include:**
-- Specific H1 (e.g., "Convert JSON to CSV Online - Free")
-- Brief explanation of the conversion and when users need it
-- The converter tool (same as homepage)
-- FAQ section specific to that conversion
-- Structured data for the page
+**Future blog post ideas (when ready):**
+- "How to Convert API Response JSON to CSV"
+- "5 Ways to Handle Nested JSON Data"
+- "How to Generate SQL from Excel"
 
-**After creating pages:**
-- [ ] Update sitemap.xml with new pages
-- [ ] Submit updated sitemap to Google Search Console
-- [ ] Submit updated sitemap to Bing Webmaster Tools
+---
 
-#### Phase 4: Community Posts
+#### Phase 6: Community Promotion
 
-Active promotion in relevant communities.
+Active promotion after landing pages and SQL generator are live.
 
-| Community | Where to Post | Status |
-|-----------|---------------|--------|
-| Reddit | r/excel | [ ] Not started |
-| Reddit | r/analytics | [ ] Not started |
-| Reddit | r/datasets | [ ] Not started |
-| LinkedIn | Personal profile + data analyst groups | [ ] Not started |
-| Twitter/X | With #DataAnalytics #Excel hashtags | [ ] Not started |
+| Community | Post Topic | Status |
+|-----------|------------|--------|
+| Reddit r/excel | SQL generator announcement | [ ] Not started |
+| Reddit r/sql | CSV to SQL tool | [ ] Not started |
+| Reddit r/webdev | API response to CSV | [ ] Not started |
+| LinkedIn | Data analyst pain points | [ ] Not started |
+| Twitter/X | Developer tool announcement | [ ] Not started |
 
-**Post templates are in the "Messaging Guidelines" section above.**
-
-#### Phase 5: Blog Content (Optional/Ongoing)
-
-Once landing pages are done, blog posts can target educational queries.
-
-| Blog Post Idea | Target Keyword | Status |
-|----------------|----------------|--------|
-| "How to Convert JSON to CSV Without Installing Software" | "json to csv without software" | [ ] Not started |
-| "Understanding JSON for Excel Users" | "what is json file excel" | [ ] Not started |
-| "How to Handle Nested JSON Data" | "nested json to csv" | [ ] Not started |
-| "CSV vs JSON vs Excel: When to Use Each" | "csv vs json" | [ ] Not started |
+---
 
 #### Ongoing Tasks
 
 - [ ] Monitor Google Search Console weekly for new query data
-- [ ] Check Bing Webmaster Tools for indexing status
-- [ ] Respond to relevant questions on Quora
+- [ ] Track which landing pages get impressions/clicks
+- [ ] Check competitors for new features
 - [ ] Update this document as tasks are completed
