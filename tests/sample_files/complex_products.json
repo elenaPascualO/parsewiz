@@ -1,0 +1,78 @@
+[
+  {
+    "id": 1,
+    "name": "Laptop Pro",
+    "brand": "TechCorp",
+    "price": 1299.99,
+    "variants": [
+      {"color": "Silver", "storage": "256GB"},
+      {"color": "Silver", "storage": "512GB"},
+      {"color": "Space Gray", "storage": "256GB"},
+      {"color": "Space Gray", "storage": "512GB"},
+      {"color": "Gold", "storage": "1TB"}
+    ],
+    "features": [
+      "Retina Display",
+      "Touch ID",
+      "Thunderbolt 4",
+      "Wi-Fi 6E",
+      "12-hour battery"
+    ],
+    "reviews": [
+      {"user": "john_doe", "rating": 5, "comment": "Amazing laptop!"},
+      {"user": "jane_smith", "rating": 4, "comment": "Great but pricey"},
+      {"user": "tech_guru", "rating": 5, "comment": "Best in class"},
+      {"user": "casual_user", "rating": 3, "comment": "Good for basics"}
+    ]
+  },
+  {
+    "id": 2,
+    "name": "UltraPhone X",
+    "brand": "MobileMax",
+    "price": 999.00,
+    "variants": [
+      {"color": "Black", "storage": "128GB"},
+      {"color": "Black", "storage": "256GB"},
+      {"color": "White", "storage": "128GB"},
+      {"color": "White", "storage": "256GB"},
+      {"color": "Blue", "storage": "512GB"}
+    ],
+    "features": [
+      "5G Ready",
+      "OLED Display",
+      "Face ID",
+      "Wireless Charging",
+      "Water Resistant",
+      "Night Mode Camera"
+    ],
+    "reviews": [
+      {"user": "phone_fanatic", "rating": 5, "comment": "Incredible phone"},
+      {"user": "budget_buyer", "rating": 2, "comment": "Too expensive"},
+      {"user": "photographer", "rating": 5, "comment": "Camera is stunning"}
+    ]
+  },
+  {
+    "id": 3,
+    "name": "SmartWatch Elite",
+    "brand": "WearTech",
+    "price": 449.00,
+    "variants": [
+      {"color": "Black", "storage": "32GB"},
+      {"color": "Silver", "storage": "32GB"},
+      {"color": "Rose Gold", "storage": "32GB"}
+    ],
+    "features": [
+      "Heart Rate Monitor",
+      "GPS Tracking",
+      "Sleep Analysis",
+      "Water Proof 50m"
+    ],
+    "reviews": [
+      {"user": "fitness_freak", "rating": 5, "comment": "Perfect for workouts"},
+      {"user": "busy_exec", "rating": 4, "comment": "Great notifications"},
+      {"user": "tech_reviewer", "rating": 4, "comment": "Solid smartwatch"},
+      {"user": "health_nut", "rating": 5, "comment": "Love the health features"},
+      {"user": "casual_wearer", "rating": 3, "comment": "Battery could be better"}
+    ]
+  }
+]

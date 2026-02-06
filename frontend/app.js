@@ -662,9 +662,12 @@ async function proceedWithExportMode() {
     showLoading()
 
     try {
+        // Calculate table count: arrays + main table
+        const tableCount = jsonAnalysis ? jsonAnalysis.arrays_found.length + 1 : 0
+
         // Fetch both previews in parallel for complex JSON
         const [multiTableData, singleFileData] = await Promise.all([
-            fetchMultiTablePreview(currentFile),
+            fetchMultiTablePreview(currentFile, tableCount),
             fetchSingleFilePreview(currentFile)
         ])
 
@@ -680,10 +683,13 @@ async function proceedWithExportMode() {
 }
 
 // Fetch multi-table preview from API
-async function fetchMultiTablePreview(file) {
+async function fetchMultiTablePreview(file, tableCount = 0) {
     const formData = new FormData()
     formData.append('file', file)
-    formData.append('rows_per_table', 5)
+    // If 10 or fewer tables, show up to 100 rows per table with scroll
+    // Otherwise, keep the compact 5-row preview
+    const rowsPerTable = tableCount <= 10 ? 100 : 5
+    formData.append('rows_per_table', rowsPerTable)
 
     const response = await fetch(`${API_BASE}/preview-all-tables`, {
         method: 'POST',

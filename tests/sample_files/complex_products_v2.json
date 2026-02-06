@@ -1,0 +1,49 @@
+[
+  {
+    "id": 1,
+    "name": "Laptop Pro",
+    "brand": "TechCorp",
+    "price": 1299.99,
+    "variants": [
+      {"color": "Silver", "storage": "256GB", "sku": "LP-S-256"},
+      {"color": "Silver", "storage": "512GB", "sku": "LP-S-512"},
+      {"color": "Space Gray", "storage": "256GB", "sku": "LP-SG-256"},
+      {"color": "Space Gray", "storage": "512GB", "sku": "LP-SG-512"},
+      {"color": "Gold", "storage": "1TB", "sku": "LP-G-1TB"}
+    ],
+    "accessories": [
+      {"name": "USB-C Charger", "price": 29.99},
+      {"name": "Laptop Sleeve", "price": 49.99},
+      {"name": "Wireless Mouse", "price": 79.99},
+      {"name": "External Monitor", "price": 299.99}
+    ],
+    "reviews": [
+      {"user": "john_doe", "rating": 5, "comment": "Amazing laptop!"},
+      {"user": "jane_smith", "rating": 4, "comment": "Great but pricey"},
+      {"user": "tech_guru", "rating": 5, "comment": "Best in class"}
+    ]
+  },
+  {
+    "id": 2,
+    "name": "UltraPhone X",
+    "brand": "MobileMax",
+    "price": 999.00,
+    "variants": [
+      {"color": "Black", "storage": "128GB", "sku": "UP-B-128"},
+      {"color": "Black", "storage": "256GB", "sku": "UP-B-256"},
+      {"color": "White", "storage": "128GB", "sku": "UP-W-128"},
+      {"color": "White", "storage": "256GB", "sku": "UP-W-256"}
+    ],
+    "accessories": [
+      {"name": "Fast Charger", "price": 39.99},
+      {"name": "Phone Case", "price": 29.99},
+      {"name": "Screen Protector", "price": 19.99}
+    ],
+    "reviews": [
+      {"user": "phone_fanatic", "rating": 5, "comment": "Incredible phone"},
+      {"user": "budget_buyer", "rating": 2, "comment": "Too expensive"},
+      {"user": "photographer", "rating": 5, "comment": "Camera is stunning"},
+      {"user": "daily_user", "rating": 4, "comment": "Solid choice"}
+    ]
+  }
+]

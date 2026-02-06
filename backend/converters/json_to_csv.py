@@ -116,14 +116,16 @@ class JsonToCsvConverter(BaseConverter):
     def _find_arrays_in_object(
         self, obj: dict[str, Any], prefix: str = ""
     ) -> list[dict[str, Any]]:
-        """Find all arrays of objects in a JSON object.
+        """Find all arrays in a JSON object (both objects and primitives).
 
         Args:
             obj: The object to analyze.
             prefix: Current path prefix.
 
         Returns:
-            List of dicts with path and count for each array found.
+            List of dicts with path, count, and type for each array found.
+            Type is "objects" for arrays of objects, "primitives" for arrays
+            of primitive values (strings, numbers, booleans).
         """
         arrays: list[dict[str, Any]] = []
 
@@ -135,16 +137,29 @@ class JsonToCsvConverter(BaseConverter):
                 nested_arrays = self._find_arrays_in_object(value, f"{full_key}.")
                 arrays.extend(nested_arrays)
 
-            elif isinstance(value, list):
-                if value and all(isinstance(item, dict) for item in value):
+            elif isinstance(value, list) and value:
+                if all(isinstance(item, dict) for item in value):
                     # Found an array of objects
-                    arrays.append({"path": full_key, "count": len(value)})
+                    arrays.append({
+                        "path": full_key,
+                        "count": len(value),
+                        "type": "objects",
+                    })
                     # Also check inside array items for nested arrays
-                    if value:
-                        nested_in_items = self._find_arrays_in_object(
-                            value[0], f"{full_key}."
-                        )
-                        arrays.extend(nested_in_items)
+                    nested_in_items = self._find_arrays_in_object(
+                        value[0], f"{full_key}."
+                    )
+                    arrays.extend(nested_in_items)
+                elif all(
+                    isinstance(item, (str, int, float, bool, type(None)))
+                    for item in value
+                ):
+                    # Found an array of primitives
+                    arrays.append({
+                        "path": full_key,
+                        "count": len(value),
+                        "type": "primitives",
+                    })
 
         return arrays
 
@@ -258,6 +273,10 @@ class JsonToCsvConverter(BaseConverter):
     ) -> dict[str, pd.DataFrame]:
         """Extract multiple tables from a list of objects.
 
+        Arrays of objects become separate tables with flattened columns.
+        Arrays of primitives become separate tables with a single 'value' column.
+        Both are linked to the main table via _record_id.
+
         Args:
             objects: List of JSON objects.
 
@@ -277,8 +296,8 @@ class JsonToCsvConverter(BaseConverter):
                     flat = self._flatten_dict(value, f"{key}.")
                     main_row.update(flat)
 
-                elif isinstance(value, list):
-                    if value and all(isinstance(item, dict) for item in value):
+                elif isinstance(value, list) and value:
+                    if all(isinstance(item, dict) for item in value):
                         # Array of objects -> separate table
                         table_name = key
                         if table_name not in array_tables:
@@ -289,9 +308,25 @@ class JsonToCsvConverter(BaseConverter):
                             flat = self._flatten_dict(item)
                             row.update(flat)
                             array_tables[table_name].append(row)
+                    elif all(
+                        isinstance(item, (str, int, float, bool, type(None)))
+                        for item in value
+                    ):
+                        # Array of primitives -> separate table with 'value' column
+                        table_name = key
+                        if table_name not in array_tables:
+                            array_tables[table_name] = []
+
+                        for item in value:
+                            row = {"_record_id": record_id, "value": item}
+                            array_tables[table_name].append(row)
                     else:
-                        # Array of primitives -> JSON string in main
-                        main_row[key] = json.dumps(value) if value else "[]"
+                        # Mixed array -> JSON string in main
+                        main_row[key] = json.dumps(value)
+
+                elif isinstance(value, list):
+                    # Empty array
+                    main_row[key] = "[]"
 
                 else:
                     # Scalar value
@@ -605,6 +640,9 @@ class JsonToCsvConverter(BaseConverter):
         Creates the Cartesian product of all nested arrays, producing one row
         per combination. Scalar fields are repeated in each row.
 
+        Arrays of objects are expanded with their keys prefixed.
+        Arrays of primitives are expanded with each value in the column.
+
         Args:
             obj: The object to expand.
             prefix: Prefix for nested keys (used for dot notation).
@@ -629,20 +667,28 @@ class JsonToCsvConverter(BaseConverter):
                     # Multiple rows - add to array expansions
                     array_expansions.append((full_key, nested_rows))
 
-            elif isinstance(value, list):
-                if value and all(isinstance(item, dict) for item in value):
+            elif isinstance(value, list) and value:
+                if all(isinstance(item, dict) for item in value):
                     # Array of objects - expand each item with key prefix
                     expanded_items: list[dict[str, Any]] = []
                     for item in value:
                         item_rows = self._expand_object(item, f"{full_key}.")
                         expanded_items.extend(item_rows)
                     array_expansions.append((full_key, expanded_items))
-                elif value:
-                    # Array of primitives - convert to JSON string
-                    scalars[full_key] = json.dumps(value)
+                elif all(
+                    isinstance(item, (str, int, float, bool, type(None)))
+                    for item in value
+                ):
+                    # Array of primitives - expand each value as a row
+                    expanded_items = [{full_key: item} for item in value]
+                    array_expansions.append((full_key, expanded_items))
                 else:
-                    # Empty array
-                    scalars[full_key] = "[]"
+                    # Mixed array - convert to JSON string
+                    scalars[full_key] = json.dumps(value)
+
+            elif isinstance(value, list):
+                # Empty array
+                scalars[full_key] = "[]"
 
             else:
                 # Scalar value
