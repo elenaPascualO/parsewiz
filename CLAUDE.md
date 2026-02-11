@@ -99,10 +99,10 @@ Types: `feat`, `fix`, `docs`, `refactor`, `test`, `chore`
 
 See `doc/` folder for detailed specifications:
 - `SPEC.md` - Comprehensive technical specifications (API, security, config)
-- `ROADMAP.md` - Project phases and feature roadmap
-- `PHASE1.md` - Current phase specifications (JSON transforms, formats, security)
-- `PHASE0.md` - MVP specifications (complete)
-- `PHASE2.md` - SQL Generator specifications (planned)
+- `ROADMAP.md` - Project phases and feature roadmap (includes all phase details)
+- `SEO.md` - SEO strategy, keywords, growth plan
+- `DISTRIBUTION.md` - Railway deployment and distribution guide
+- `tasks/` - Current sprint tasks and feature specs
 
 ## Environment Variables (Production)
 

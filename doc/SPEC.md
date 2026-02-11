@@ -10,7 +10,7 @@
 Provide a simple, fast, and privacy-focused tool for converting between common tabular data formats without requiring user registration or storing user data.
 
 ### 1.2 Current Status
-Phase 1 in progress. Phase 0 (MVP) complete with 91 tests passing. See `doc/PHASE1.md` for current phase details.
+Phase 1 in progress. Phase 0 (MVP) complete with 91 tests passing. See `doc/ROADMAP.md` for phase details.
 
 ---
 

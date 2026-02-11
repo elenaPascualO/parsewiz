@@ -46,4 +46,4 @@ Phase 0 (MVP) completed January 2026 with 91 tests passing.
 - Responsive UI
 - PWA support (installable on mobile devices)
 
-See `doc/PHASE0.md` for full details.
+See `doc/ROADMAP.md` (Phase 0 section) for full details.
