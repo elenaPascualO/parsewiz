@@ -1,5 +1,17 @@
 // ParseWiz Frontend Application
 
+/**
+ * Track an event in Umami (skips if disabled via localStorage).
+ * Disable in your browser: localStorage.setItem('umami.disabled', '1')
+ */
+function trackEvent(event, data = {}) {
+    try {
+        if (typeof umami !== 'undefined' && localStorage.getItem('umami.disabled') !== '1') {
+            umami.track(event, data)
+        }
+    } catch { /* ignore */ }
+}
+
 const API_BASE = '/api'
 
 // DOM Elements
@@ -186,12 +198,10 @@ async function processFile(file, page = 1) {
         showSelectedFile(file)
 
         // Umami Analytics: Track file upload event
-        if (typeof umami !== 'undefined') {
-            umami.track('file_uploaded', {
-                file_type: file.name.split('.').pop().toLowerCase(),
-                file_size_kb: Math.round(file.size / 1024)
-            })
-        }
+        trackEvent('file_uploaded', {
+            file_type: file.name.split('.').pop().toLowerCase(),
+            file_size_kb: Math.round(file.size / 1024)
+        })
     }
 
     showLoading()
@@ -328,13 +338,11 @@ function showPreview(file, data) {
     requestAnimationFrame(updateScrollIndicator)
 
     // Umami Analytics: Track successful preview
-    if (typeof umami !== 'undefined') {
-        umami.track('preview_shown', {
-            file_type: data.detected_type,
-            row_count: data.total_rows,
-            column_count: data.columns.length
-        })
-    }
+    trackEvent('preview_shown', {
+        file_type: data.detected_type,
+        row_count: data.total_rows,
+        column_count: data.columns.length
+    })
 }
 
 // Update pagination controls state
@@ -415,13 +423,11 @@ async function convertFile(format) {
     const outputFormat = formatMap[format] || format
 
     // Umami Analytics: Track conversion start
-    if (typeof umami !== 'undefined') {
-        umami.track('conversion_started', {
-            from_format: cachedDetectedType,
-            to_format: outputFormat,
-            export_mode: selectedExportMode
-        })
-    }
+    trackEvent('conversion_started', {
+        from_format: cachedDetectedType,
+        to_format: outputFormat,
+        export_mode: selectedExportMode
+    })
 
     try {
         const formData = new FormData()
@@ -455,12 +461,10 @@ async function convertFile(format) {
         downloadBlob(blob, downloadName)
 
         // Umami Analytics: Track conversion completion
-        if (typeof umami !== 'undefined') {
-            umami.track('conversion_completed', {
-                from_format: cachedDetectedType,
-                to_format: outputFormat
-            })
-        }
+        trackEvent('conversion_completed', {
+            from_format: cachedDetectedType,
+            to_format: outputFormat
+        })
     } catch (error) {
         showError(error.message)
     } finally {
@@ -603,9 +607,9 @@ async function retryParse() {
     await processFile(editedFile, 1)
 
     // Umami Analytics: Track JSON edit retry result
-    if (wasInEditor && typeof umami !== 'undefined') {
+    if (wasInEditor) {
         const success = !editorSection.classList.contains('hidden') === false
-        umami.track('json_edit_retry', {
+        trackEvent('json_edit_retry', {
             success: success
         })
     }
@@ -640,12 +644,10 @@ function showExportModeChoice(analysis) {
     complexityInfo.innerHTML = `Found ${analysis.arrays_found.length} arrays that would expand to <strong>${analysis.estimated_rows.toLocaleString()} rows</strong>: ${arraysText}.<br><small>Formula: ${analysis.expansion_formula}</small>`
 
     // Umami Analytics: Track complex JSON detection
-    if (typeof umami !== 'undefined') {
-        umami.track('complex_json_detected', {
-            estimated_rows: analysis.estimated_rows,
-            arrays_count: analysis.arrays_found.length
-        })
-    }
+    trackEvent('complex_json_detected', {
+        estimated_rows: analysis.estimated_rows,
+        arrays_count: analysis.arrays_found.length
+    })
 
     // Show export mode section, hide others
     uploadSection.classList.add('hidden')
@@ -842,8 +844,8 @@ function setPreviewMode(mode) {
     selectedExportMode = mode === 'multi' ? 'multi_table' : 'single_row'
 
     // Umami Analytics: Track export mode selection (only for complex JSON)
-    if (isComplexJson && typeof umami !== 'undefined') {
-        umami.track('export_mode_selected', {
+    if (isComplexJson) {
+        trackEvent('export_mode_selected', {
             mode: mode === 'multi' ? 'multi' : 'single'
         })
     }
@@ -1004,9 +1006,7 @@ async function handleFeedbackSubmit(e) {
         feedbackFormContainer.innerHTML = '<p class="feedback-success">Thank you for your feedback!</p>'
 
         // Umami Analytics: Track feedback submission
-        if (typeof umami !== 'undefined') {
-            umami.track('feedback_submitted')
-        }
+        trackEvent('feedback_submitted')
 
         // Reset after 3 seconds
         setTimeout(() => {
