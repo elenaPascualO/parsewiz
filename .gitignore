@@ -53,9 +53,6 @@ Thumbs.db
 # Playwright
 .playwright-mcp/
 
-# uv
-uv.lock
-
 # Documentation and project instructions
 doc/
 CLAUDE.md
